@@ -57,12 +57,13 @@ public class Project {
             int[] repeatDates = new int[meteorArray.length];
             for (int i = 1; i < rowSize; i++) {
                 for (int j = 0; j < rowSize; j++) {
-                    if (!meteorArray[j][6].equals(" ") && i != j &&
-                            meteorArray[i][6].equals(meteorArray[j][6])) {
-                        repeatDates[i]++;
+                    if (meteorArray[i][6] != null && meteorArray[j][6] != null
+                    && i != j && meteorArray[i][6].equals(meteorArray[j][6])) {
+                            repeatDates[i]++;
                     }
                 }
             }
+
             // find out which date repeats the most and assign it to "mode"
             // assign the year which has the most meteorites in it to "year"
             int mode = 0;
