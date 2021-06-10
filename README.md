@@ -1,4 +1,4 @@
-# internship-project
+# meteorite-project
 
 Program that takes a file of Meteorites as input and outputs:
 - total number of meteorites
