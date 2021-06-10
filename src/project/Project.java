@@ -13,15 +13,15 @@ import java.util.*;
 public class Project {
     public static void main(String[] args) {
 
-        File fs = new File(args[0]);
+        File file = new File(args[0]);
         int rowSize = 0;
 
         // find the number of rows in the file by scanning each line
         // and incrementing 'rowSize' each time
-        try (Scanner sc = new Scanner(fs)) {
+        try (Scanner scanner = new Scanner(file)) {
 
-            while (sc.hasNext()) {
-                String temp = sc.nextLine();
+            while (scanner.hasNext()) {
+                String temp = scanner.nextLine();
                 rowSize++;
             }
 
@@ -29,15 +29,15 @@ public class Project {
             int meteorNum = rowSize - 1;
 
             // reopen the file and create an array big enough for the data
-            File file = new File(args[0]);
+            File fs = new File(args[0]);
             String[][] meteorArray = new String[rowSize][10];
 
             // scan the data into the 2d array 'meteorArray' by scanning in
             // each line and separating the data where the commas are except
             // when there are quotes around the data
-            try (Scanner scanner = new Scanner(file)) {
-                for (int i = 0; scanner.hasNext(); i++) {
-                    String line = scanner.nextLine();
+            try (Scanner sc = new Scanner(fs)) {
+                for (int i = 0; i < rowSize; i++) {
+                    String line = sc.nextLine();
                     String[] lineArray = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                     for (int j = 0; j < lineArray.length; j++) {
                         meteorArray[i][j] = lineArray[j];
@@ -54,8 +54,7 @@ public class Project {
                 // count the dates that repeat and save the number of repeats in 'repeatDates'
                 for (int i = 1; i < rowSize; i++) {
                     if (!meteorArray[i][4].equals("")) {
-                        double num = Double.parseDouble(meteorArray[i][4]);
-                        massSum += num;
+                        massSum += Double.parseDouble(meteorArray[i][4]);
                         meteorWithMassNum++;
                     }
                     for (int j = 0; j < rowSize; j++) {
@@ -70,10 +69,11 @@ public class Project {
                 double massAverageGrams = massSum / meteorWithMassNum;
                 double massAveragePounds = massAverageGrams / 453.59237;
 
-                // find out which date repeats the most and assign it to 'mode'
-                // assign the year which has the most meteorites in it to 'year'
                 int mode = 0;
                 String year = "";
+
+                // find out which date repeats the most and assign it to 'mode'
+                // assign the year which has the most meteorites in it to 'year'
                 for (int i = 1; i < repeatDates.length; i++) {
                     if (repeatDates[i] > mode) {
                         mode = repeatDates[i];
